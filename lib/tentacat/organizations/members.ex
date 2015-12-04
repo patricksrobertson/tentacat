@@ -14,7 +14,25 @@ defmodule Tentacat.Organizations.Members do
   """
   @spec list(binary, Client.t) :: Tentacat.response
   def list(organization, client \\ %Client{}) do
-    get "orgs/#{organization}/members", client
+    list(organization, client, %{})
+  end
+
+  @doc """
+  List members of a `organization`. The response will differ if the authenticated user is also owner of the organization.
+  Also provides filter based upon whther members are 2FA enabled, or by membership roles.
+
+  ## Example
+
+      Tentacat.Organizations.Members.list "github", client, %{filter: '2fa_disbled'}
+      Tentacat.Organizations.Members.list "github", client, %{role: 'admin'}
+
+  More info at: http://developer.github.com/v3/orgs/members/#members-list
+  """
+  @spec list(binary, Client.t, Map.m) :: Tentacat.response
+  def list(organization, client, options) do
+    params = Map.merge(%{filter: 'all', role: 'all'}, options)
+
+    get "orgs/#{organization}/members?filter=#{params[:filter]}&role=#{params[:role]}"
   end
 
   @doc """
