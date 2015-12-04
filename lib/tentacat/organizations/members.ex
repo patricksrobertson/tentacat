@@ -126,4 +126,19 @@ defmodule Tentacat.Organizations.Members do
     delete "orgs/#{organization}/public_members/#{user}", client
   end
 
+  @doc """
+  Get a specific users membership in an `organization`.
+
+  ## Example
+
+      Tentacat.Organizations.Members.my_membership "github", client
+
+  More info at: https://developer.github.com/v3/orgs/members/#get-your-organization-membership
+  """
+
+  @spec my_membership(binary, Client.t) :: Tentacat.response
+  def my_membership(organization, client) do
+    get "user/memberships/orgs/#{organization}", client
+  end
+
 end
