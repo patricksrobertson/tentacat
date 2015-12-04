@@ -32,7 +32,7 @@ defmodule Tentacat.Organizations.Members do
   def list(organization, client, options) do
     params = Map.merge(%{filter: 'all', role: 'all'}, options)
 
-    get "orgs/#{organization}/members?filter=#{params[:filter]}&role=#{params[:role]}"
+    get "orgs/#{organization}/members?filter=#{params[:filter]}&role=#{params[:role]}", client
   end
 
   @doc """
